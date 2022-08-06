@@ -71,28 +71,34 @@ def convert_uvz_to_xyz(u, v, z, R, t, K):
 
     return cw
 
+# function for call back, set parameter here
 def convert_(x, y):
+    # camera rotations
     pitch = 0
     yaw = 0
     roll = 0
     R = calc_R(pitch, yaw, roll)
 
-    fov_x = 86
+
+    # Diagonal FOV
+    fov_x = 72
+
+    # Image resolution
     pixel_w = 1912
     pixel_h = 1160
-    K = calc_K(fov_x, pixel_w, pixel_h, cx=None, cy=None)
+    K = calc_K(fov_x, pixel_w, pixel_h)
 
     # t is the Coordinates of camera
     t = np.array([1.0, 1.0, 0])
+
+    # z is the fixed highet of camera
     z = 3
     return(convert_uvz_to_xyz(x, y, z, R, t, K))
 
 
 
 
-def main_func(u = 1280, v = 960, z = 3):
-    # u , v, z is the point of image
-    #dummy paras
+def main_func():
 
     def on_EVENT_LBUTTONDOWN(event, x, y, flags, param):
         if event == cv2.EVENT_LBUTTONDOWN:
